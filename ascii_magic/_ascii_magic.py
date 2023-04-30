@@ -2,7 +2,7 @@ from ascii_magic.constants import PALETTE, CHARS_BY_DENSITY, DEFAULT_STYLES
 
 import colorama
 import webbrowser
-import urllib.request
+import requests
 from PIL import Image
 
 import io
@@ -387,9 +387,8 @@ class AsciiArt:
     @classmethod
     def _load_url(cls, url: str) -> Image.Image:
 
-        with urllib.request.urlopen(url) as response:
-            return Image.open(response)
-
+        return Image.open(io.BytesIO(requests.get(url).content))
+        
     @classmethod
     def _load_file(cls, path: str) -> Image.Image:
         return Image.open(path)
